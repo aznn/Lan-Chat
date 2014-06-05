@@ -14,11 +14,18 @@ ul li {
 
 .title {
     font-weight: bold;
+    padding: 10px;
+    color: #665390;
+}
+#usernames {
+  color: #009900;
 }
 
 .userlist {
-    background: red;
+    /*background: #CCE4BC;*/
+    background-color: #F0F1EE;
     width: 100%;
+    border-bottom: 1px solid black;
 }
 
 #chatlog {
