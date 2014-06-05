@@ -1,0 +1,46 @@
+body {
+    min-width: 550px;
+    font-family: Helvetica, Airal, sans-serif;
+}
+
+ul {
+    list-style: none;
+    padding: 10px;
+}
+
+ul li {
+    display: inline;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.userlist {
+    background: red;
+    width: 100%;
+}
+
+#chatlog {
+    background: yellow;
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#chatlog li {
+    display: block;
+}
+
+.chat {
+    clear: both;
+    width: 100%;
+}
+
+.chat input {
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    margin-top: 5px;
+    border: 2px solid gray;
+}
