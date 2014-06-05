@@ -3,6 +3,8 @@ var back = chrome.extension.getBackgroundPage();
 var chatBox = document.getElementById('chatbox');
 var chatLog = document.getElementById('chatlog');
 
+chatbox.focus();
+back.history.forEach(insertMessage);
 // set userlist
 (function() {
     var html = "";
@@ -31,7 +33,7 @@ function insertMessage(msg) {
         li.classList.add('them');
     }
 
-    li.innerHTML = msg.message;
+    li.innerHTML = msg.username + ": " + msg.message;
     chatLog.appendChild(li);
 }
 
@@ -41,8 +43,7 @@ function sendMessage(msg) {
         message: msg
     };
 
-    var html = '<li class="me">' + msg + '</li>';
+    insertMessage(msgObj);
     back.sendMessage(msg);
 
-    chatLog.innerHTML += html;
 }
