@@ -5,6 +5,8 @@ var chatLog = document.getElementById('chatlog');
 
 chatbox.focus();
 back.history.forEach(insertMessage);
+
+
 // set userlist
 (function() {
     var html = "";
@@ -35,6 +37,7 @@ function insertMessage(msg) {
 
     li.innerHTML = msg.username + ": " + msg.message;
     chatLog.appendChild(li);
+    chatLog.scrollTop = chatLog.scrollHeight;
 }
 
 function sendMessage(msg) {
