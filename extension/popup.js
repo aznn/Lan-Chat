@@ -4,7 +4,9 @@ var chatBox = document.getElementById('chatbox');
 var chatLog = document.getElementById('chatlog');
 
 chatbox.focus();
-back.history.forEach(insertMessage);
+back.history.forEach(function(i) {
+    insertMessage(i,true);
+});
 
 
 // set userlist
@@ -21,12 +23,16 @@ chatBox.onkeypress = function(e) {
     var keyCode = e.keyCode || e.which;
     if (keyCode == '13') {
         // enter key pressed
+        if(chatBox.value.trim() == "")
+        {
+            return;
+        }
         sendMessage(chatBox.value);
         chatBox.value = "";
     }
 };
 
-function insertMessage(msg) {
+function insertMessage(msg, batch) {
     var li = document.createElement('li');
 
     if (msg.username == 'me') {
@@ -36,7 +42,15 @@ function insertMessage(msg) {
     }
 
     li.innerHTML = msg.username + ": " + msg.message;
+    if (!batch) li.classList.add('beforeadd');
     chatLog.appendChild(li);
+
+    if (!batch) {
+        setTimeout(function() {
+            li.classList.remove('beforeadd');
+        }, 250)
+    }
+
     chatLog.scrollTop = chatLog.scrollHeight;
 }
 
