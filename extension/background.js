@@ -1,6 +1,7 @@
 var socket = io("http://172.16.136.170:1337/");
 var users = {};
 var history = [];
+var name = NAME || "Test-name";
 
 socket.on('user:all', function(_users) {
     users = _users;
@@ -23,7 +24,7 @@ socket.on('message:new', function(msg) {
     history.push(msg);
 });
 
-socket.emit('user:add', "Azaan");
+socket.emit('user:add', name);
 socket.emit('user:all');
 
 // messagign the popup
