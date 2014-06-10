@@ -11,7 +11,7 @@ back.history.forEach(function(i) {
 function setUserList() {
     var html = "";
     for (var user in back.users) {
-        html += "<li> | " + user + "  </li>";
+        html += "<li>" + user + "</li>";
     }
 
     usernames.innerHTML = html;

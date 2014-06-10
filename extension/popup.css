@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     min-width: 550px;
     font-family: Helvetica, Airal, sans-serif;
@@ -47,6 +51,14 @@ ul li {
   padding-top: 5px;
 }
 
+#usernames li:after {
+  content: '   |   ';
+}
+
+#usernames li:last-child:after {
+  content: '';
+}
+
 .userlist {
     /*background: #CCE4BC;*/
     background-color: #F0F1EE;
@@ -54,6 +66,8 @@ ul li {
     border-bottom: 1px solid black;
     position: relative;
 }
+
+.userList
 
 #chatlog {
     background: white;
