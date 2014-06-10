@@ -49,7 +49,7 @@ socket.on('user:typingstart', function(username) {
     }
 });
 
-socket.on('user:typingend', function(username) {
+socket.on('user:typingstop', function(username) {
     if (isPopup()) {
         getPopup().stopTyping(username);
     }
