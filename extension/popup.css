@@ -45,6 +45,11 @@ ul li {
     transition: 250ms all linear;
 }
 
+#chatlog li.typing {
+  clear: both;
+  font-size: 12px;
+}
+
 #chatlog li.me {
   float: left;
   background-color: #C4C4C4;
