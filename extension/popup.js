@@ -50,11 +50,12 @@ function insertMessage(msg, batch) {
 
     if (msg.username == 'me') {
         li.classList.add('me');
+        li.innerHTML = msg.message;
     } else {
         li.classList.add('them');
+        li.innerHTML = msg.username + ': ' + msg.message;
     }
 
-    li.innerHTML = msg.username + ": " + msg.message;
     if (!batch) li.classList.add('beforeadd');
     chatLog.appendChild(li);
 
