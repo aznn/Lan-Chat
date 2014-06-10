@@ -17,6 +17,9 @@ var numUsers = 0;
 io.on('connection', function(socket) {
     var addedUser = false;
 
+    // request user to send name
+    socket.emit('user:register');
+
     // sends user list
     function broadcastUserList() {
         socket.broadcast.emit('user:all', usernames);
@@ -27,7 +30,11 @@ io.on('connection', function(socket) {
     });
 
     socket.on('message:new', function(msg) {
-        console.log(msg);
+        if (socket.username === undefined) {
+            socket.emit('user:register');
+        }
+
+        console.log(socket.username + ':' + msg);
         socket.broadcast.emit('message:new', {
             username: socket.username,
             message: msg
@@ -35,7 +42,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('user:add', function(username) {
-        console.log(username);
+        console.log('Registered: ' + username);
         socket.username = username;
 
         usernames[username] = username;

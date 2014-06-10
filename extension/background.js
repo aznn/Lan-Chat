@@ -13,7 +13,7 @@ socket.on('message:new', function(msg) {
     if (popup) {
         chrome.extension.getViews()[1].insertMessage(msg);
     } else {
-        chrome.notifications.create("msg" + (+new Date), {
+        chrome.notifications.create("msg" + (+new Date()), {
             type: "basic",
             title: "New Message",
             message: "[" + msg.username + "] " + msg.message,
@@ -24,8 +24,17 @@ socket.on('message:new', function(msg) {
     history.push(msg);
 });
 
-socket.emit('user:add', name);
-socket.emit('user:all');
+socket.on('connect', function() {
+    socket.emit('user:add', name);
+});
+
+socket.on('reconnect', function() {
+    socket.emit('user:add', name);
+});
+
+socket.on('user:register', function() {
+    socket.emit('user:add', name);
+});
 
 // messagign the popup
 
