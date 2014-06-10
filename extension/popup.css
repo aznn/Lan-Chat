@@ -38,7 +38,7 @@ ul li {
 
 #chatlog li {
     display: block;
-    width: 350px;
+    width: auto;
     margin: 5px;
     padding: 10px;
     border-radius: 10px;
@@ -46,7 +46,7 @@ ul li {
 }
 
 #chatlog li.me {
-  
+  float: left;
   background-color: #C4C4C4;
   clear: both;
 }
@@ -56,7 +56,7 @@ ul li {
   clear: both;
   background-color: #0071FF;
   color: white;
-  
+
 }
 
 #chatlog li.them.beforeadd {
