@@ -7,11 +7,17 @@ socket.on('user:all', function(_users) {
     users = _users;
 });
 
-socket.on('message:new', function(msg) {
-    var popup = chrome.extension.getViews().length != 1;
+function isPopup() {
+    return chrome.extension.getViews().length != 1;
+}
 
-    if (popup) {
-        chrome.extension.getViews()[1].insertMessage(msg);
+function getPopup() {
+    return chrome.extension.getViews()[1];
+}
+
+socket.on('message:new', function(msg) {
+    if (isPopup()) {
+        getPopup().insertMessage(msg);
     } else {
         chrome.notifications.create("msg" + (+new Date()), {
             type: "basic",
@@ -36,8 +42,26 @@ socket.on('user:register', function() {
     socket.emit('user:add', name);
 });
 
-// messagign the popup
+// handle typing messages
+socket.on('user:typingstart', function(username) {
+    if (isPopup()) {
+        getPopup().startTyping(username);
+    }
+});
 
+socket.on('user:typingend', function(username) {
+    if (isPopup()) {
+        getPopup().stopTyping(username);
+    }
+});
+
+function startTyping() {
+    socket.emit('user:typingstart');
+}
+
+function stopTyping() {
+    socket.emit('user:typingstop');
+}
 
 // called by the popup
 function sendMessage(msg) {

@@ -15,7 +15,8 @@ var usernames = {};
 var numUsers = 0;
 
 io.on('connection', function(socket) {
-    var addedUser = false;
+    var addedUser = false,
+        typing = false;
 
     // request user to send name
     socket.emit('user:register');
@@ -39,6 +40,10 @@ io.on('connection', function(socket) {
             username: socket.username,
             message: msg
         });
+
+        if (typing) {
+            socket.broadcast.emit('user:typingstop', socket.username);
+        }
     });
 
     socket.on('user:add', function(username) {
@@ -49,12 +54,21 @@ io.on('connection', function(socket) {
         numUsers++;
         addedUser = true;
 
-        // socket.broadcast.emit('user:joined', {
-        //     uusername: socket.username,
-        //     numUsers: numUsers
-        // });
-
         broadcastUserList();
+    });
+
+    socket.on('user:typingstart', function() {
+        console.log(socket.username + ' started typing');
+
+        socket.broadcast.emit('user:typingstart', socket.username);
+        typing = true;
+    });
+
+    socket.on('user:typingstop', function() {
+        console.log(socket.username + ' stopped typing');
+
+        socket.broadcast.emit('user:typingstop', socket.username);
+        typing = false;
     });
 
     socket.on('disconnect', function() {
@@ -63,11 +77,6 @@ io.on('connection', function(socket) {
         if(addedUser) {
             delete usernames[socket.username];
             numUsers--;
-
-            // socket.broadcast.emit('user:left', {
-            //     username: socket.username,
-            //     numUsers: numUsers
-            // });
 
             broadcastUserList();
         }

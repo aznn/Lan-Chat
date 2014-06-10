@@ -19,14 +19,27 @@ back.history.forEach(function(i) {
     usernames.innerHTML = html;
 })();
 
+var isTyping = false;
+chatBox.onkeyup = function(e) {
+    if (!isTyping && chatBox.value !== '') {
+        back.startTyping();
+        isTyping = true;
+
+    } else if (isTyping && chatBox.value === '') {
+        back.stopTyping();
+        isTyping = false;
+    }
+};
+
 chatBox.onkeypress = function(e) {
     var keyCode = e.keyCode || e.which;
+
     if (keyCode == '13') {
         // enter key pressed
-        if(chatBox.value.trim() == "")
-        {
+        if(chatBox.value.trim() === '') {
             return;
         }
+
         sendMessage(chatBox.value);
         chatBox.value = "";
     }
@@ -48,10 +61,33 @@ function insertMessage(msg, batch) {
     if (!batch) {
         setTimeout(function() {
             li.classList.remove('beforeadd');
-        }, 250)
+        }, 250);
     }
 
     chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+var whoseTyping = {};
+function startTyping(username) {
+    if (whoseTyping[username] === undefined) {
+        var li = document.createElement('li');
+        li.classList.add('typing');
+        li.innerHTML = username + ' is typing...';
+        li.id = 'typing-' + username;
+
+        chatLog.appendChild(li);
+
+        whoseTyping[username] = username;
+    }
+}
+
+function stopTyping(username) {
+    if (whoseTyping[username] !== undefined) {
+        var li = document.getElementById('typing-' + username);
+        li.parentElement.removeChild(li);
+
+        delete whoseTyping[username];
+    }
 }
 
 function sendMessage(msg) {
