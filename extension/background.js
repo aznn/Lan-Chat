@@ -3,10 +3,6 @@ var users = {};
 var history = [];
 var name = NAME || "Test-name";
 
-socket.on('user:all', function(_users) {
-    users = _users;
-});
-
 function isPopup() {
     return chrome.extension.getViews().length != 1;
 }
@@ -14,6 +10,13 @@ function isPopup() {
 function getPopup() {
     return chrome.extension.getViews()[1];
 }
+
+socket.on('user:all', function(_users) {
+    users = _users;
+
+    if (isPopup())
+        getPopup().setUserList();
+});
 
 socket.on('message:new', function(msg) {
     if (isPopup()) {

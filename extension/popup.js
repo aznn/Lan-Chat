@@ -8,16 +8,16 @@ back.history.forEach(function(i) {
     insertMessage(i,true);
 });
 
-
-// set userlist
-(function() {
+function setUserList() {
     var html = "";
     for (var user in back.users) {
         html += "<li> | " + user + "  </li>";
     }
 
     usernames.innerHTML = html;
-})();
+}
+
+setUserList();
 
 var isTyping = false;
 chatBox.onkeyup = function(e) {
