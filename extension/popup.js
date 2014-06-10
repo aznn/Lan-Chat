@@ -101,3 +101,17 @@ function sendMessage(msg) {
     back.sendMessage(msg);
 
 }
+
+// online/offline status
+var statusLight = document.getElementById('status-light');
+function updateOnlineStatus() {
+    if (back.isOnline()) {
+        statusLight.classList.remove('offline');
+        statusLight.classList.add('online');
+    } else {
+        statusLight.classList.remove('online');
+        statusLight.classList.add('offline');
+    }
+}
+
+updateOnlineStatus();

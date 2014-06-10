@@ -13,6 +13,26 @@ ul li {
     display: inline;
 }
 
+.userlist span {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    content: ' ';
+    border-radius: 10px;
+}
+
+.userlist span.online {
+    background: #3BDA00;
+    box-shadow: 0px 0px 5px #3BDA00;
+}
+
+.userlist span.offline {
+    background: #F80012;
+    box-shadow: 0px 0px 5px #F80012;
+}
+
 .title {
     font-weight: bold;
     padding: 10px 0 0 10px;
@@ -32,6 +52,7 @@ ul li {
     background-color: #F0F1EE;
     width: 100%;
     border-bottom: 1px solid black;
+    position: relative;
 }
 
 #chatlog {

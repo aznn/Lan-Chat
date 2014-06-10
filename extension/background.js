@@ -11,6 +11,10 @@ function getPopup() {
     return chrome.extension.getViews()[1];
 }
 
+function isOnline() {
+    return socket.connected;
+}
+
 socket.on('user:all', function(_users) {
     users = _users;
 
@@ -35,10 +39,36 @@ socket.on('message:new', function(msg) {
 
 socket.on('connect', function() {
     socket.emit('user:add', name);
+
+    if (isPopup())
+        getPopup().updateOnlineStatus();
 });
 
 socket.on('reconnect', function() {
     socket.emit('user:add', name);
+
+    if (isPopup())
+        getPopup().updateOnlineStatus();
+});
+
+socket.on('connect_error', function() {
+    if (isPopup())
+        getPopup().updateOnlineStatus();
+});
+
+socket.on('connect_timeout', function() {
+    if (isPopup())
+        getPopup().updateOnlineStatus();
+});
+
+socket.on('reconnect_error', function() {
+    if (isPopup())
+        getPopup().updateOnlineStatus();
+});
+
+socket.on('reconnect_failed', function() {
+    if (isPopup())
+        getPopup().updateOnlineStatus();
 });
 
 socket.on('user:register', function() {
